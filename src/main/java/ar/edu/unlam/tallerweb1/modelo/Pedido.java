@@ -3,9 +3,9 @@ package ar.edu.unlam.tallerweb1.modelo;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,11 +22,28 @@ public class Pedido {
 	private String solicitante;
 	private String direccion;
 	private Integer telefono;
+//	private Date fecha;
+	private Integer cantidad;
+	private Boolean estado;	
+	private List<Pizza> listaPizza = new LinkedList<Pizza>();
 	
-	@ManyToMany(fetch = FetchType.EAGER) 
-	@JoinTable(name = "pedidos_pizzas", joinColumns = { @JoinColumn(name = "id_Pedido") }, inverseJoinColumns = { @JoinColumn(name = "id_Pizza") })
-	private List<Pizza> pizzas = new LinkedList<Pizza>();
 			
+
+	public Pedido() {
+		super();
+
+	}
+
+	@ManyToMany(cascade = CascadeType.ALL) 
+	@JoinTable(name = "pedidos_pizzas", joinColumns = { @JoinColumn(name = "id_Pedido") }, inverseJoinColumns = { @JoinColumn(name = "id_Pizza") })
+	public List<Pizza> getListaPizza() {
+		return listaPizza;
+	}
+
+	public void setListaPizza(List<Pizza> listaPizza) {
+		this.listaPizza = listaPizza;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -59,12 +76,35 @@ public class Pedido {
 		this.telefono = telefono;
 	}
 	
-	public List<Pizza> getPizzas() {
-		return pizzas;
+	
+	public Boolean getEstado() {
+		return estado;
 	}
 
-	public void setPizzas(List<Pizza> pizzas) {
-		this.pizzas = pizzas;
-	}	
+	
+
+	public void setEstado(Boolean estado) {
+		this.estado = estado;
+	}
+
+	public Integer getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
+	}
+
+	
+//	public Date getFecha() {
+//		return fecha;
+//	}
+//
+//	public void setFecha(Date fecha) {
+//		this.fecha = fecha;
+//	}
+
+	
+	
 	
 }

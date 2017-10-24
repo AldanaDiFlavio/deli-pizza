@@ -1,34 +1,96 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import java.util.LinkedList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Pizza {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_Pizza")
+	
 	private Long id;
-	private String nombre;
+	private String nombre;	
 	private String imagen;
 	private Integer precio;
 	private Integer tcoccion;	
+	private Boolean tamanio;
+	private String aclaracion;
 	
+	private List<Ingrediente> listaIngrediente = new LinkedList<Ingrediente>();
+	private List<Pedido> listaPedido = new LinkedList<Pedido>();
+	
+	public Pizza() {
+		super();
+	}
+	
+	
+	public Pizza(Long id, String nombre, String imagen, Integer precio, Integer tcoccion, Boolean tamanio,
+			String aclaracion, List<Ingrediente> listaIngrediente) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.imagen = imagen;
+		this.precio = precio;
+		this.tcoccion = tcoccion;
+		this.tamanio = tamanio;
+		this.aclaracion = aclaracion;
+		this.setListaIngrediente(listaIngrediente);
+	}
+
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_Pizza")
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
+		
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "pizza_ingrediente", joinColumns = { @JoinColumn(name = "id_Pizza") }, inverseJoinColumns = { @JoinColumn(name = "id_Ingrediente") })
+	public List<Ingrediente> getListaIngrediente() {
+		return listaIngrediente;
+	}
+
+
+	public void setListaIngrediente(List<Ingrediente> listaIngrediente) {
+		this.listaIngrediente = listaIngrediente;
+	}
+	
+	
+	@ManyToMany(mappedBy = "listaPizza")
+	public List<Pedido> getListaPedido() {
+		return listaPedido;
+	}
+
+
+	public void setListaPedido(List<Pedido> listaPedido) {
+		this.listaPedido = listaPedido;
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+	public Boolean getTamanio() {
+		return tamanio;
+	}
+	public void setTamanio(Boolean tamanio) {
+		this.tamanio = tamanio;
+	}
+	
 	public String getImagen() {
 		return imagen;
 	}
@@ -48,4 +110,13 @@ public class Pizza {
 	public void setTcoccion(Integer tcoccion) {
 		this.tcoccion = tcoccion;
 	}
+
+	public String getAclaracion() {
+		return aclaracion;
+	}
+
+	public void setAclaracion(String aclaracion) {
+		this.aclaracion = aclaracion;
+	}
+	
 }

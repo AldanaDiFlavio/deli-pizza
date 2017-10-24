@@ -13,20 +13,10 @@
                     <div class="product-slider">
                     	<c:forEach items = "${pizzas}" var="pizzas">
 		                   	<div class="col-md-4 col-sm-6">
-	                            	<div class="product">
-	                                	<div class="flip-container">
-	                                    	<div class="flipper">
-	                                        	<div class="front">
+
 		                                        	<img src="images/pizzas/${pizzas.imagen}" alt="imagen no encontrada" class="img-responsive">
-		                                    	</div>
-		                                    	<div class="back">
-		                                        	<img src="images/pizzas/${pizzas.imagen}" alt="" class="img-responsive">
-		                                    	</div>
-		                                	</div>
-			                        	</div>
-		                            	<div class="invisible">
-			                            	<img src="images/pizzas/${pizzas.imagen}" alt="" class="img-responsive">
-		                            	</div>
+		                                    	
+		                                    	
 			                        	<div class="text">
 		                                	<h3>${pizzas.nombre}</h3>
 		                                    <p class="buttons">	                                        
@@ -34,7 +24,7 @@
 		                                    </p>
 		                                </div>
 		                            </div>
-                         	</div>
+                         
                        	</c:forEach>
 					</div>
             	</div>
