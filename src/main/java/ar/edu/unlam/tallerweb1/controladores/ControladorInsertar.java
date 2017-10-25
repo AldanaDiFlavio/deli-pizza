@@ -81,7 +81,7 @@ public class ControladorInsertar {
 			primerpedido.setSolicitante("Juan");
 			primerpedido.setTelefono(1162343596);
 			primerpedido.setDireccion("Florencio Varela 699");
-			primerpedido.setPizzas(pizzasprimerpedido);
+			primerpedido.setListaPizzas(pizzasprimerpedido);
 			servicioPedido.guardarPedido(primerpedido);
 					
 			List<Pizza> pizzassegundopedido = new LinkedList<Pizza>();
@@ -91,7 +91,7 @@ public class ControladorInsertar {
 			segundopedido.setSolicitante("Mariano");
 			segundopedido.setTelefono(1159464863);
 			segundopedido.setDireccion("Falsa 123");
-			segundopedido.setPizzas(pizzassegundopedido);
+			segundopedido.setListaPizzas(pizzassegundopedido);
 			servicioPedido.guardarPedido(segundopedido);
 			
 			List<Pizza> pizzastercerpedido = new LinkedList<Pizza>();
@@ -101,7 +101,7 @@ public class ControladorInsertar {
 			tercerpedido.setSolicitante("Ramon");
 			tercerpedido.setTelefono(117343526);
 			tercerpedido.setDireccion("Siempre viva");
-			tercerpedido.setPizzas(pizzastercerpedido);
+			tercerpedido.setListaPizzas(pizzastercerpedido);
 			servicioPedido.guardarPedido(tercerpedido);
 			
 			return new ModelAndView("redirect:/menu");			
