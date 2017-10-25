@@ -2,16 +2,16 @@ package ar.edu.unlam.tallerweb1.modelo;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+
 
 @Entity
 public class Pedido {
@@ -25,23 +25,34 @@ public class Pedido {
 //	private Date fecha;
 	private Integer cantidad;
 	private Boolean estado;	
-	private List<Pizza> listaPizza = new LinkedList<Pizza>();
 	
+	@ManyToMany(fetch = FetchType.EAGER) 
+	@JoinTable(name = "pedidos_pizzas", joinColumns = { @JoinColumn(name = "id_Pedido") }, inverseJoinColumns = { @JoinColumn(name = "id_Pizza") })
+	private List<Pizza> listaPizzas = new LinkedList<Pizza>();
 			
-
 	public Pedido() {
 		super();
 
 	}
-
-	@ManyToMany(cascade = CascadeType.ALL) 
-	@JoinTable(name = "pedidos_pizzas", joinColumns = { @JoinColumn(name = "id_Pedido") }, inverseJoinColumns = { @JoinColumn(name = "id_Pizza") })
-	public List<Pizza> getListaPizza() {
-		return listaPizza;
+	
+	public Pedido(Long id, String solicitante, String direccion, Integer telefono, Integer cantidad, Boolean estado,
+			List<Pizza> listaPizzas) {
+		super();
+		this.id = id;
+		this.solicitante = solicitante;
+		this.direccion = direccion;
+		this.telefono = telefono;
+		this.cantidad = cantidad;
+		this.estado = estado;
+		this.listaPizzas = listaPizzas;
+	}
+	
+	public List<Pizza> getListaPizzas() {
+		return listaPizzas;
 	}
 
-	public void setListaPizza(List<Pizza> listaPizza) {
-		this.listaPizza = listaPizza;
+	public void setListaPizzas(List<Pizza> listaPizzas) {
+		this.listaPizzas = listaPizzas;
 	}
 	
 	public Long getId() {
@@ -81,8 +92,6 @@ public class Pedido {
 		return estado;
 	}
 
-	
-
 	public void setEstado(Boolean estado) {
 		this.estado = estado;
 	}
@@ -104,7 +113,5 @@ public class Pedido {
 //		this.fecha = fecha;
 //	}
 
-	
-	
 	
 }

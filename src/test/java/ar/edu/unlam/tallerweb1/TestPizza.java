@@ -16,49 +16,6 @@ import ar.edu.unlam.tallerweb1.modelo.Pizza;
 
 public class TestPizza extends SpringTest{
 	
-
-	@Test
-	@Transactional
-	@Rollback(false)
-	public void testInsertarIngredientes() {
-		Session session = getSession();
-							
-		Ingrediente tomate = new Ingrediente();
-		tomate.setNombre("Tomate");
-		tomate.setPrecio((float) 10);
-		session.save(tomate);
-		
-		Ingrediente choclo = new Ingrediente();
-		choclo.setNombre("choclo");
-		choclo.setPrecio((float) 10);
-		session.save(choclo);
-		
-		Ingrediente jamon = new Ingrediente();
-		jamon.setNombre("jamon");
-		jamon.setPrecio((float) 10);
-		session.save(jamon);
-		
-		Ingrediente	morron = new Ingrediente();
-		morron.setNombre("morron");
-		morron.setPrecio((float) 10);
-		session.save(morron);
-		
-		Ingrediente anchoas = new Ingrediente();
-		anchoas.setNombre("anchoas");
-		anchoas.setPrecio((float) 10);
-		session.save(anchoas);
-		
-		Ingrediente longaniza = new Ingrediente();
-		longaniza.setNombre("longaniza");
-		longaniza.setPrecio((float) 10);
-		session.save(longaniza);
-		
-		Ingrediente jym = new Ingrediente();
-		jym.setNombre("jamonymorron");
-		jym.setPrecio((float) 10);
-		session.save(jym);
-	}
-
 	@SuppressWarnings("unchecked")
 	@Test
 	@Transactional
@@ -69,6 +26,41 @@ public class TestPizza extends SpringTest{
 	Session session = getSession();
 	Boolean grande=true;
 	Boolean chica=false;
+	
+	Ingrediente tomate = new Ingrediente();
+	tomate.setNombre("Tomate");
+	tomate.setPrecio((float) 10);
+	session.save(tomate);
+	
+	Ingrediente choclo = new Ingrediente();
+	choclo.setNombre("choclo");
+	choclo.setPrecio((float) 10);
+	session.save(choclo);
+	
+	Ingrediente jamon = new Ingrediente();
+	jamon.setNombre("jamon");
+	jamon.setPrecio((float) 10);
+	session.save(jamon);
+	
+	Ingrediente	morron = new Ingrediente();
+	morron.setNombre("morron");
+	morron.setPrecio((float) 10);
+	session.save(morron);
+	
+	Ingrediente anchoas = new Ingrediente();
+	anchoas.setNombre("anchoas");
+	anchoas.setPrecio((float) 10);
+	session.save(anchoas);
+	
+	Ingrediente longaniza = new Ingrediente();
+	longaniza.setNombre("longaniza");
+	longaniza.setPrecio((float) 10);
+	session.save(longaniza);
+	
+	Ingrediente jym = new Ingrediente();
+	jym.setNombre("jamonymorron");
+	jym.setPrecio((float) 10);
+	session.save(jym);
 		
 	Pizza pizzacalabresa = new Pizza();
 	pizzacalabresa.setNombre("pizza Calabresa");
@@ -151,11 +143,6 @@ public class TestPizza extends SpringTest{
 	public void testInsertarPedido() {
 		Session session = getSession();	
 		
-		List<Pizza> pizzasprimerpedido;
-	
-		pizzasprimerpedido = session.createCriteria(Pizza.class)
-				    .add(Restrictions.eq("nombre", "pizza Calabresa"))
-					.list();
 			
 		
 		Pedido primerpedido = new Pedido();
@@ -165,9 +152,42 @@ public class TestPizza extends SpringTest{
 //		primerpedido.setFecha(22-10-17);
 		primerpedido.setCantidad(2);
 		primerpedido.setEstado(false);
-		primerpedido.setListaPizza(pizzasprimerpedido);
+		
+
+		List<Pizza> pizzasprimerpedido;
+	
+		pizzasprimerpedido = session.createCriteria(Pizza.class)
+				    .add(Restrictions.eq("nombre", "pizza Calabresa"))
+					.list();
+		
+		primerpedido.setListaPizzas(pizzasprimerpedido);
 		
 		session.save(primerpedido);
+		
+		
+		
+		
+		Pedido segundopedido = new Pedido();
+		segundopedido.setSolicitante("Clara");
+		segundopedido.setTelefono(1533839081);
+		segundopedido.setDireccion("Marmol 9879");
+//		segundopedido.setFecha(22-10-17);
+		segundopedido.setCantidad(5);
+		segundopedido.setEstado(false);
+		
+
+	
+		
+		Criteria pizzasegundopedido = session.createCriteria(Pizza.class);
+	     Criterion i1 = Restrictions.eq("nombre", "pizza Jamon y Morron");
+	     Criterion i2 = Restrictions.eq("nombre", "pizza Calabresa");
+	     LogicalExpression orExp = Restrictions.or(i1,i2);
+	     pizzasegundopedido.add(orExp);
+	    
+	     List<Pizza> results = pizzasegundopedido.list();
+
+	     segundopedido.setListaPizzas(results);
+		 session.save(segundopedido);
 
 	}
 	
